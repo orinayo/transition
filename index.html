@@ -6,16 +6,97 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Gradient Background</title>
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body id="gradient">
-  <h1>Background Generator</h1>
-  <input class="color1" type="color" name="color1" value="#ff0000">
-  <input class="color2" type="color" name="color2" value="#00ff00">
-  <h2>Current CSS Background</h2>
-  <h3></h3>
-  <script src="script.js"></script>
+<body>
+  <header class="header">
+    <div class="header__text-box">
+      <h1 class="heading-primary">
+        <span class="heading-primary--main">Transition</span>
+        <span class="heading-primary--sub">Create your custom linear gradient</span>
+      </h1>
+      <div class="gradient-controls">
+        <p class="gradient-output">
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="gradient">
+      <div class="row">
+        <div class="col-1-of-2">
+          <div class="gradient-1">
+            <canvas id="picker-1"></canvas>
+            <br>
+            <input id="color-1" value="#8dff28">
+          </div>
+        </div>
+
+        <button class="btn-primary">
+          Create Transition
+        </button>
+
+        <div class="slidecontainer">
+          <input type="range" min="-180" max="180" value="90" class="slider" id="myRange">
+          <p style="color: black"><span id="degMeasure"></span>deg</p>
+        </div>
+        <div class="col-1-of-2">
+          <div class="gradient-2">
+            <canvas id="picker-2"></canvas>
+            <br>
+            <input id="color-2" value="#288dff">
+            <script>
+            </script>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/html5kellycolorpicker.js"></script>
+  <script>
+    const gradientOne = document.querySelector('.gradient-1')
+    const gradientTwo = document.querySelector('.gradient-2')
+    new KellyColorPicker({
+      place: 'picker-1',
+      input: 'color-1',
+      size: 150,
+      alpha_slider: true,
+      userEvents: {
+        change: self => {
+          // set background color for 'input' to current color of color picker
+          if (self.getCurColorHsv().v < 0.5) {
+            self.getInput().style.color = "#FFF";
+          } else {
+            self.getInput().style.color = "#000";
+          }
+
+          gradientOne.style.background = self.getCurColorHex();
+        }
+      }
+    });
+    new KellyColorPicker({
+      place: 'picker-2',
+      input: 'color-2',
+      size: 150,
+      alpha_slider: true,
+      userEvents: {
+        change: function (self) {
+          // set background color for 'input' to current color of color picker
+          if (self.getCurColorHsv().v < 0.5) {
+            self.getInput().style.color = "#FFF";
+          } else {
+            self.getInput().style.color = "#000";
+          }
+          gradientTwo.style.background = self.getCurColorHex();
+        }
+      }
+    });
+  </script>
+  <script src="js/script.js"></script>
 </body>
 
 </html>
